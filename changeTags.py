@@ -20,22 +20,20 @@ audiofileDict = {'mp3':'EasyID3','mp4':'MP4','flac':'FLAC', 'm4a':'M4A','ogg':'O
 mlog = loggers('mp3Tags')
 mlog.setLogLevel('ERROR')
 
-def getFilesNames(dirPath, recursive=True, flag=''):
+def getFilesNames(dirPath, recursive=True, fileFilter=''):
 	''' 
 	Description: search for all the file paths in folder
-	Parâmetros:
 	Parameters:
 		dirPath: folder path to be scanned
 		recursive: if True, scan recursivelly all subfolders of folder (default: True)
-		flag: se não for vazia, retorna apenas os arquivos com essa terminação(default: '')
-		filter: if not empty string, filter files by its extension (Ex: avi returns only *.avi files). Default: ''
+		fileFilter: if not empty string, filter files by its extension (Ex: avi returns only *.avi files). Default: ''
 	Return:
 		filesList: list containing all the files path
 	'''
 	if recursive:
-		filesList = [os.path.join(dirAbsPath, f) for dirAbsPath, dn, filenames in os.walk(dirPath) for f in filenames if f.endswith(flag)]
+		filesList = [os.path.join(dirAbsPath, f) for dirAbsPath, dn, filenames in os.walk(dirPath) for f in filenames if f.endswith(fileFilter)]
 	else:
-		filesList =[os.path.join(dirPath, fileName) for fileName in os.listdir(dirPath) if fileName.endswith(flag) if os.path.isfile(os.path.join(dirPath,fileName))]
+		filesList =[os.path.join(dirPath, fileName) for fileName in os.listdir(dirPath) if fileName.endswith(fileFilter) if os.path.isfile(os.path.join(dirPath,fileName))]
 	return filesList
 
 def changeTagInMediaFiles(folder,tag,tagInfo):
