@@ -56,13 +56,13 @@ def changeTagInMediaFiles(folder,tag,tagInfo):
 				mlog.log.debug('File '+music+' has a not recognized extension.')
 			else:
 				try:
-					exec('''audio = '''+fileClass+'''("'''+music+'''")''')
+					audio = globals()[fileClass](music)
 				except ID3NoHeaderError:
 					mlog.log.debug('File '+' has no ID3 tag. Trying to add it.')
 					audio = ID3()
 					audio.add(TPE1(encoding=3, text=u'Artist'))
 					audio.save(music)
-					exec('''audio = '''+fileClass+'''("'''+music+'''")''')
+					audio = globals()[fileClass](music)
 				except Exception as error:
 					mlog.log.error( 'Error setting tag '+tag+' of file '+music+': '+str(error))
 				finally:
